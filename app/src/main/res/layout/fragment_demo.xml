@@ -22,9 +22,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.021"
-            android:focusedMonthDateColor="@color/colorAccent"
+            android:focusedMonthDateColor="@color/update"
             />
-
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
