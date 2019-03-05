@@ -3,14 +3,14 @@ package com.example.helthyme;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -23,11 +23,21 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mainButton;
     private Button updateButton;
-    private static String TAG = "[Add]";
+    CustomPagerAdapter mCustomPagerAdapter;
+    ViewPager mViewPager;
+    private static String TAG = "Mihai";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // == Setting up the ViewPager ==
+        mCustomPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), this);
+
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mCustomPagerAdapter);
+
+
 
         mainButton = (Button) findViewById(R.id.main_button);
         updateButton = (Button) findViewById(R.id.update_button);
@@ -44,9 +54,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Delete Data entries
-        DataDBHelper dbHelper = new DataDBHelper(getBaseContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        dbHelper.onUpgrade(db,1,1);
+//        DataDBHelper dbHelper = new DataDBHelper(getBaseContext());
+//        deleteData(dbHelper);
 
 
         mainButton.setOnClickListener(new View.OnClickListener(){
@@ -121,7 +130,12 @@ public class MainActivity extends AppCompatActivity {
         }
         cursor.close();
 
+    }
 
+    public void deleteData(DataDBHelper dbHelper){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        dbHelper.onUpgrade(db,1,1);
+        System.out.println("[DELETE] All entries has been deleted!");
     }
 
 }
